@@ -6,8 +6,8 @@ public class UserStory {
     private Integer id;
     private String title;
     private String description;
-    private String priority;
-    private String estimation;
+    private Integer priority;
+    private Integer estimation;
 
     public Integer getId() {
         return id;
@@ -33,19 +33,19 @@ public class UserStory {
         this.description = description;
     }
 
-    public String getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(Integer priority) {
         this.priority = priority;
     }
 
-    public String getEstimation() {
+    public Integer getEstimation() {
         return estimation;
     }
 
-    public void setEstimation(String estimation) {
+    public void setEstimation(Integer estimation) {
         this.estimation = estimation;
     }
 
