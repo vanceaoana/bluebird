@@ -20,9 +20,9 @@ public class UserStoryEntity {
     @Column(name="description")
     private String description;
     @Column(name="priority")
-    private String priority;
+    private Integer priority;
     @Column(name="estimation")
-    private String estimation;
+    private Integer estimation;
 
     public Integer getId() {
         return id;
@@ -48,19 +48,19 @@ public class UserStoryEntity {
         this.description = description;
     }
 
-    public String getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(Integer priority) {
         this.priority = priority;
     }
 
-    public String getEstimation() {
+    public Integer getEstimation() {
         return estimation;
     }
 
-    public void setEstimation(String estimation) {
+    public void setEstimation(Integer estimation) {
         this.estimation = estimation;
     }
 }

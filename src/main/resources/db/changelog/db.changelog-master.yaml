@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Oana
+      changes:
+      - createTable:
+          columns:
+          - column:
+              name: id
+              type: integer
+          - column:
+              name: title
+              type: varchar(255)
+          - column:
+              name: description
+              type: varchar(255)
+          - column:
+              name: priority
+              type: integer
+          - column:
+              name: estimation
+              type: integer
+          schemaName: bluebird
+          tableName: user_story
+
+  - changeSet:
+      id: 2
+      author: Oana
+      changes:
+      - addPrimaryKey:
+          columnNames: id
+          constraintName: pk_userstory
+          schemaName: bluebird
+          tableName: user_story
+
+  - changeSet:
+      id: 3
+      author: Oana
+      changes:
+      - addAutoIncrement:
+          columnDataType: int
+          columnName: id
+          incrementBy: 1
+          schemaName: bluebird
+          startWith: 2
+          tableName: user_story
