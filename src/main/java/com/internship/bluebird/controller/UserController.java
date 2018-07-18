@@ -5,6 +5,9 @@ import com.internship.bluebird.dto.User;
 import com.internship.bluebird.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -38,5 +41,11 @@ public class UserController {
     public User get(@PathVariable Integer id)
     {
         return userService.get(id);
+    }
+
+    @GetMapping("/all")
+    public List<User> getAll()
+    {
+        return userService.getAll();
     }
 }

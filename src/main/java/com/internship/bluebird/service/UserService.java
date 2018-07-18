@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -53,6 +55,27 @@ public class UserService {
         }
 
         throw new EntityNotFoundException();
+    }
+
+    public List<User> getAll() {
+        List<UserEntity> userEntityList = userRepo.findAll();
+
+        if (CollectionUtils.isEmpty(userEntityList)) {
+            throw new EntityNotFoundException();
+        }
+
+        return userEntityList
+                .stream()
+                .map(userEntity -> {
+                    User userDto = userMapper.entityToBusinessObject(userEntity);
+                    Integer id = userDto.getId();
+                    userDto.setUserStoryList(userStoryService.findByUserId(id));
+                    userDto.setBugList(bugService.findByUserId(id));
+                    userDto.setTaskList(taskService.findByUserId(id));
+                    return userDto;
+                })
+                .collect(Collectors.toList());
+
     }
 
     @Transactional
