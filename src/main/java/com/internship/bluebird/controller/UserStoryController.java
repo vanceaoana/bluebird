@@ -4,6 +4,9 @@ import com.internship.bluebird.dto.UserStory;
 import com.internship.bluebird.service.UserStoryService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin
 @RestController
 @RequestMapping("userstory")
 public class UserStoryController {
@@ -37,5 +40,11 @@ public class UserStoryController {
     public UserStory get(@PathVariable Integer id)
     {
         return userStoryService.get(id);
+    }
+
+    @GetMapping("/all")
+    public List<UserStory> getAll()
+    {
+        return userStoryService.getAll();
     }
 }

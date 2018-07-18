@@ -1,7 +1,6 @@
 package com.internship.bluebird.service;
 
 import com.internship.bluebird.domain.UserStoryEntity;
-import com.internship.bluebird.dto.Bug;
 import com.internship.bluebird.dto.UserStory;
 import com.internship.bluebird.mapper.UserStoryMapper;
 import com.internship.bluebird.repo.UserStoryRepo;
@@ -13,6 +12,7 @@ import org.springframework.util.CollectionUtils;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserStoryService {
@@ -60,7 +60,7 @@ public class UserStoryService {
         return userStoryList;
     }
 
-@Transactional
+    @Transactional
     public UserStory get(Integer id){
         Optional<UserStoryEntity> userStoryEntityOptional = userStoryRepo.findById(id);
 
@@ -72,6 +72,25 @@ public class UserStoryService {
         }
 
         throw new EntityNotFoundException();
+    }
+
+    @Transactional
+    public List<UserStory> getAll() {
+        List<UserStoryEntity> userStoryEntityList = userStoryRepo.findAll();
+
+        if (CollectionUtils.isEmpty(userStoryEntityList)) {
+            throw new EntityNotFoundException();
+        }
+
+        return userStoryEntityList
+                .stream()
+                .map(userStoryEntity -> {
+                    UserStory userStoryDto = userStoryMapper.entityToBusinessObject(userStoryEntity);
+                    userStoryDto.setTaskList(taskService.findByUserStoryId(userStoryEntity.getId()));
+                    userStoryDto.setBugList(bugService.findByUserStoryId(userStoryEntity.getId()));
+                    return userStoryDto;
+                })
+                .collect(Collectors.toList());
     }
 
     @Transactional
