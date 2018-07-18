@@ -164,6 +164,37 @@ databaseChangeLog:
           tableName: bug
 
   - changeSet:
+      id: 9
+      author: Oana
+      changes:
+      - createTable:
+          columns:
+          - column:
+              name: id
+              type: integer
+          - column:
+              name: name
+              type: varchar(255)
+          - column:
+              name: email
+              type: varchar(255)
+          schemaName: bluebird
+          tableName: user
+
+      - addPrimaryKey:
+          columnNames: id
+          constraintName: pk_user
+          tableName: user
+
+      - addAutoIncrement:
+          columnDataType: int
+          columnName: id
+          incrementBy: 1
+          schemaName: bluebird
+          startWith: 1
+          tableName: user
+
+  - changeSet:
       id: 10
       author: Oana
       changes:
@@ -190,3 +221,64 @@ databaseChangeLog:
               type: varchar(255)
           schemaName: bluebird
           tableName: user_story
+
+  - changeSet:
+      id: 11
+      author: Oana
+      changes:
+      - addColumn:
+          columns:
+          - column:
+              name: userId
+              type: integer
+          schemaName: bluebird
+          tableName: bug
+
+      - addColumn:
+          columns:
+          - column:
+              name: userId
+              type: integer
+          schemaName: bluebird
+          tableName: task
+
+      - addColumn:
+          columns:
+          - column:
+              name: userId
+              type: integer
+          schemaName: bluebird
+          tableName: user_story
+
+      - addForeignKeyConstraint:
+          baseColumnNames: userId
+          baseTableName: bug
+          constraintName: fk_bug_user
+          referencedColumnNames: id
+          referencedTableName: user
+
+      - addForeignKeyConstraint:
+          baseColumnNames: userId
+          baseTableName: user_story
+          constraintName: fk_user_story_user
+          referencedColumnNames: id
+          referencedTableName: user
+
+      - addForeignKeyConstraint:
+          baseColumnNames: userId
+          baseTableName: task
+          constraintName: fk_task_user
+          referencedColumnNames: id
+          referencedTableName: user
+
+  - changeSet:
+      id: 12
+      author: Oana
+      changes:
+      - addColumn:
+          columns:
+          - column:
+              name: active_flag
+              type: boolean
+          schemaName: bluebird
+          tableName: user
