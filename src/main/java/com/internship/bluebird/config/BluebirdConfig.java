@@ -1,5 +1,6 @@
 package com.internship.bluebird.config;
 
+import com.internship.bluebird.aop.LoggingAspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -27,6 +28,11 @@ public class BluebirdConfig {
                 .url(springProperties.getDatasource().getUrl())
                 .driverClassName(springProperties.getDatasource().getDriverClassName())
                 .build();
+    }
+
+    @Bean
+    public LoggingAspect loggingAspect() {
+        return new LoggingAspect();
     }
 
 }
