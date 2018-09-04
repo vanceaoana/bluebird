@@ -12,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private MyBasicAuthenticationEntryPoint authenticationEntryPoint;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -20,12 +23,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                .csrf().disable()
+                .httpBasic()
+                .authenticationEntryPoint(authenticationEntryPoint);
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user").password("{noop}user").roles("USER");
+        auth.inMemoryAuthentication().withUser("user").password("{noop}user").authorities("ROLE_USER");
     }
 
 }
